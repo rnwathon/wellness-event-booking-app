@@ -1,5 +1,6 @@
 import React from 'react';
 import {Route, NavLink} from 'react-router-dom';
+import {connect} from 'react-redux';
 import {Icon} from 'semantic-ui-react';
 import Sidebar from './../../components/Sidebar';
 
@@ -8,11 +9,7 @@ export const DashboardLayout = ({component: Component, ...rest}) => {
     <Route {...rest} render={props => (
       <div className="dashboard">
         <div className="dashboard__sidebar">
-          <Sidebar>
-            <ul>
-              <li><NavLink to="/"> <Icon name="dashboard" /> Dashboard </NavLink></li>
-            </ul>
-          </Sidebar>
+          <Sidebar />
         </div>
         <div className="dashboard__content">
           <Component {...props} />
