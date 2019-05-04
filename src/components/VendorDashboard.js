@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 import {Header, Card, Table, Grid} from 'semantic-ui-react';
 import VendorEvent from './VendorEvent';
 import VendorBooking from './VendorBooking';
 
 
-export default class VendorDashboard extends Component {
+class VendorDashboard extends Component {
   render() {
     return (
       <div>
@@ -17,8 +18,7 @@ export default class VendorDashboard extends Component {
                   <Header 
                     as='h1' 
                     color="blue"
-                    icon="dashboard"
-                    content="Dashboard"
+                    content={`Welcome, ${this.props.role}`}
                     className="bolder">
                   </Header>
                 </Card.Content>
@@ -40,3 +40,11 @@ export default class VendorDashboard extends Component {
     )
   }
 }
+
+const mapStateToPros = store => {
+  return {
+    role: store.loginReducer.role
+  }
+}
+
+export default connect(mapStateToPros)(VendorDashboard);

@@ -16,10 +16,10 @@ export default class VendorEvent extends Component {
 
   render() {
     return (
-      <Card className="borderless" fluid>
+      <Card className="borderless extra-padding" fluid>
         <Card.Content>
           <Card.Header blue>Your Event Services</Card.Header>
-          <Card.Meta> Manage your event services that you can do </Card.Meta>
+          <Card.Meta className="mb-2"> Manage your event services that you can do </Card.Meta>
           <Table basic="very" compact padded>
             <Table.Header>
               <Table.Row>
