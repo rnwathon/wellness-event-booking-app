@@ -15,7 +15,6 @@ export const login = (email, password) => dispatch => {
   })
   .then(res => {
     const decoded = jwt.decode(res.data.token);
-
     dispatch({
       type: 'LOGIN_SUCCESS',
       name: decoded.name,
@@ -24,6 +23,9 @@ export const login = (email, password) => dispatch => {
     })
   })
   .catch(err => {
-    console.log(err.response ? err.response.data.message : err.message);
+    dispatch({
+      type: 'LOGIN_FAILED',
+      message: err.response ? err.response.data.message : err.message
+    })
   })
 }

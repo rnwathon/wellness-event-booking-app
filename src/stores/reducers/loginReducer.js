@@ -3,7 +3,8 @@ const initState = {
   isLogin: false,
   token: '',
   name: '',
-  role: ''
+  role: '',
+  message: ''
 }
 
 export const loginReducer = (state = initState, action) => {
@@ -22,6 +23,14 @@ export const loginReducer = (state = initState, action) => {
       token: action.token,
       name: action.name,
       role: action.role
+    }
+  }
+
+  if(action.type === 'LOGIN_FAILED'){
+    return {
+      ...state,
+      isFetching: false,
+      message: action.message
     }
   }
 
