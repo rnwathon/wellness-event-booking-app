@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import {Helmet} from 'react-helmet';
+// import LoginRoute from './routes/LoginRoute';
+// import CompanyRoute from './routes/CompanyRoute';
+import VendorRoute from './routes/VendorRoute';
 
 class App extends Component {
   render(){
@@ -13,7 +16,9 @@ class App extends Component {
           />
         </Helmet>
   
-        Hello World!
+        {/* <LoginRoute /> */}
+        {/* <CompanyRoute /> */}
+        {/* <VendorRoute /> */}
       </div>
     );
   }
