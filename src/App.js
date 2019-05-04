@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
 import {Helmet} from 'react-helmet';
-// import LoginRoute from './routes/LoginRoute';
-// import CompanyRoute from './routes/CompanyRoute';
+import LoginRoute from './routes/LoginRoute';
+import CompanyRoute from './routes/CompanyRoute';
 import VendorRoute from './routes/VendorRoute';
+import {connect} from 'react-redux';
+import {loginAction} from './stores/actions/loginAction';
 
 class App extends Component {
   render(){
+
+    const {isLogin, name, role} = this.props;
+
     return (
       <div className="App">
         <Helmet>
@@ -16,12 +21,25 @@ class App extends Component {
           />
         </Helmet>
   
-        {/* <LoginRoute /> */}
-        {/* <CompanyRoute /> */}
-        {/* <VendorRoute /> */}
+        {
+          !isLogin ? <LoginRoute /> 
+          : role === 'vendor' ? <VendorRoute />
+          : role === 'company' ? <CompanyRoute />
+          : null
+        }
+        
+
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = store => {
+  return {
+    isLogin: store.loginReducer.isLogin,
+    name: store.loginReducer.name,
+    role: store.loginReducer.role
+  }
+}
+
+export default connect(mapStateToProps)(App);
