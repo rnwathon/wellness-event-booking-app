@@ -1,0 +1,22 @@
+.login {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__content {
+    padding: 1.5rem !important;
+  }
+
+  &__header {
+    font-size: 2.5rem !important;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  &__meta {
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+}
