@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {Header, Card, Table, Button, Modal} from 'semantic-ui-react';
+import {Header, Card, Table} from 'semantic-ui-react';
+import CompanyBookingAdd from './CompanyBookingAdd';
 
 export default class CompanyBooking extends Component {
   render() {
@@ -21,6 +22,9 @@ export default class CompanyBooking extends Component {
         {/* Table of Booking Data */}
         <Card className="borderless" fluid>
           <Card.Content>
+
+            <CompanyBookingAdd />
+
             <Table basic="very" striped>
               <Table.Header>
                 <Table.Row>
