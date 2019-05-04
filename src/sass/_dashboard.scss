@@ -1,0 +1,13 @@
+.dashboard {
+  &__sidebar {
+    position: fixed;
+    top: 0; bottom: 0; left: 0;
+  }
+
+  &__content {
+    min-height: 100vh;
+    background: #f0f0f0 !important;
+    padding: 30px 30px 30px $sidebarWidth+30px;
+    box-sizing: border-box;
+  }
+}
