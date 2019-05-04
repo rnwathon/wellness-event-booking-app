@@ -1,0 +1,45 @@
+.sidebar {
+  width: $sidebarWidth;
+  height: 100vh;
+  background: #fff;
+  position: relative;
+
+  &__header {
+    padding: 3rem 0;
+    text-align: center;
+  }
+
+  &__footer {
+    position: absolute;
+    bottom: 0;
+  }
+
+  &__menus,
+  &__footer {
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        padding: 0 10px;
+
+        a {
+          text-transform: uppercase;
+          font-weight: bold;
+          display: block;
+          padding: 10px;
+          border-radius: 5px;
+
+          &:hover {
+            background: #f3f3f3;
+          }
+
+          &.active {
+            background: #f3f3f3;
+          }
+        }
+      }
+    }
+  }
+}
