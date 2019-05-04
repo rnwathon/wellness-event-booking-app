@@ -11,11 +11,11 @@ function Sidebar(props) {
       </div>
       <div className="sidebar__menus">
         <ul>
-          <li><NavLink to="/"> <Icon name="dashboard" /> Dashboard </NavLink></li>
-          {
+          <li><NavLink exact to="/"> <Icon name="dashboard" /> Dashboard </NavLink></li>
+          {/* {
             props.role === 'vendor' &&
               <li><NavLink to="/event"> <Icon name="files" /> Event </NavLink></li>
-          }
+          } */}
         </ul>
       </div>
       <div className="sidebar__footer">
