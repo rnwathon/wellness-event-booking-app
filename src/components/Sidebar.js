@@ -12,7 +12,7 @@ export default function Sidebar(props) {
       </div>
       <div className="sidebar__footer">
         <ul>
-          <li><a href="#"> <Icon name="sign-out"/> Log Out</a></li>
+          <li><a href="/logout"> <Icon name="sign-out"/> Log Out</a></li>
         </ul>
       </div>
     </div>
