@@ -40,7 +40,7 @@ export default class CompanyBookingAdd extends Component {
         open={this.state.modalOpen}
         size="tiny" 
         centered={false}
-        trigger={<Button color="blue" onClick={this.handleOpen}><Icon name="plus" /> Book New Event </Button>} 
+        trigger={<Button className="mb-2" color="blue" onClick={this.handleOpen}><Icon name="plus" /> Book New Event </Button>} 
         >
         <Header content='Book New Event' />
         <Modal.Content>

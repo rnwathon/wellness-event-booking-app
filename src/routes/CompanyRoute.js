@@ -1,12 +1,12 @@
 import React from 'react';
 import {Switch} from 'react-router-dom';
 import {DashboardLayout} from './layouts';
-import CompanyBooking from '../components/CompanyBooking';
+import CompanyDashboard from '../components/CompanyDashboard';
 
 export default function CompanyRoute() {
   return (
     <Switch>
-      <DashboardLayout exact path="/" component={CompanyBooking} />
+      <DashboardLayout exact path="/" component={CompanyDashboard} />
     </Switch>
   )
 }
