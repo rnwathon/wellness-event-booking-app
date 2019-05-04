@@ -5,7 +5,7 @@ import {Header, Card, Table} from 'semantic-ui-react';
 export default class VendorEvent extends Component {
   render() {
     return (
-<div>
+      <div>
         {/* Header */}
         <Card className="borderless" fluid>
           <Card.Content>
