@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Button, Header, Icon, Modal, Form, Label, Message } from 'semantic-ui-react';
+import {connect} from 'react-redux';
+import { Button, Header, Icon, Modal, Form, Label, Message, Dropdown } from 'semantic-ui-react';
 import { DateTimeInput } from 'semantic-ui-calendar-react';
+import {getCountries} from './../stores/actions/locationAction';
 
-export default class CompanyBookingAdd extends Component {
+class CompanyBookingAdd extends Component {
 
   state = { 
     modalOpen: false,
@@ -11,6 +13,10 @@ export default class CompanyBookingAdd extends Component {
     date: '',
     proposedDate: [],
     proposedDateLimit: false
+  }
+
+  componentDidMount(){
+    this.props.getCountries();
   }
 
   handleOpen = () => this.setState({ modalOpen: true })
@@ -51,6 +57,15 @@ export default class CompanyBookingAdd extends Component {
   }
 
   render() {
+    // maaped countries list to a new format for Dropdown Component
+    const countriesMapped = this.props.countries.map(country => {
+      return {
+        key: country.alpha2Code,
+        value: country.alpha2Code,
+        text: country.name
+      }
+    })
+
     return (
       <Modal 
         open={this.state.modalOpen}
@@ -102,8 +117,22 @@ export default class CompanyBookingAdd extends Component {
                 <Message.Header>Proposed Date Limit!</Message.Header>
                 <p>You only allow to proposed 3 dates</p>
               </Message>
-
             </Form.Field>
+
+            <Form.Group widths="equal">
+              <Form.Field>
+                <label>Postal / Zip Code</label>
+                <input type="text" placeholder="postal/zipcode"/>
+              </Form.Field>
+              <Form.Field>
+                <label>Country</label>
+                <Dropdown 
+                  placeholder="Select Country"
+                  search
+                  selection
+                  options={countriesMapped}/>
+              </Form.Field>
+            </Form.Group>
 
             <Button color='green' type="submit">
               <Icon name='checkmark' /> Submit
@@ -118,3 +147,12 @@ export default class CompanyBookingAdd extends Component {
     )
   }
 }
+
+const mapStateToProps = store => {
+  return{
+    token: store.loginReducer.token,
+    countries: store.locationReducer.countries
+  }
+}
+
+export default connect(mapStateToProps, {getCountries})(CompanyBookingAdd);
