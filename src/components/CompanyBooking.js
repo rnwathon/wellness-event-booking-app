@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Card, Table, Button, Message, Label, Icon} from 'semantic-ui-react';
 import CompanyBookingAdd from './CompanyBookingAdd';
+import CompanyBookingView from './CompanyBookingView';
 
 export default class CompanyBooking extends Component {
   state = {
@@ -34,7 +35,7 @@ export default class CompanyBooking extends Component {
       <Card className="borderless extra-padding" fluid>
         <Card.Content>
           <Card.Header>Book an Event</Card.Header>
-          <Card.Meta className="mb-2">Manage your event booking</Card.Meta>
+          <Card.Meta className="mb-1">Manage your event booking</Card.Meta>
 
           <CompanyBookingAdd/>
 
@@ -56,9 +57,9 @@ export default class CompanyBooking extends Component {
                     <Table.Cell colSpan="6" textAlign="center"> You Have Not Book Anything Yet.</Table.Cell>
                   </Table.Row>
                 : 
-                  this.state.booking.map(item => {
+                  this.state.booking.map((item, i) => {
                     return(
-                      <Table.Row>
+                      <Table.Row key={i}>
                         <Table.Cell>{item.eventName}</Table.Cell>
                         <Table.Cell>{item.vendorName}</Table.Cell>
                         <Table.Cell width={2}>
@@ -76,7 +77,7 @@ export default class CompanyBooking extends Component {
                         </Table.Cell>
                         <Table.Cell>{item.createdAt}</Table.Cell>
                         <Table.Cell>
-                          <Button primary>View</Button>
+                          <CompanyBookingView id={i} />
                         </Table.Cell>
                       </Table.Row>
                     )
