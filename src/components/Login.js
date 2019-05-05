@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Card, Form, Button, Dimmer, Loader} from 'semantic-ui-react';
 import {connect} from 'react-redux';
 import {login} from './../stores/actions/loginAction';
+import ErrorAlert from './ErrorAlert';
 
 class Login extends Component {
   
@@ -25,6 +26,8 @@ class Login extends Component {
     const {isFetching} = this.props
     return (
       <div className="login">
+
+        <ErrorAlert message={this.props.message} />
         
         <Dimmer active={isFetching && true}>
           <Loader />
@@ -68,7 +71,8 @@ class Login extends Component {
 
 const mapStateToProps = store => {
   return {
-    isFetching: store.loginReducer.isFetching
+    isFetching: store.loginReducer.isFetching,
+    message: store.loginReducer.message
   }
 }
 
