@@ -3,6 +3,7 @@ import {Card, Table, Button, Icon, Loader, Dimmer} from 'semantic-ui-react';
 import {connect} from 'react-redux';
 import {getEvents} from './../stores/actions/eventAction';
 import VendorEventAdd from './VendorEventAdd';
+import VendorEventDelete from './VendorEventDelete';
 
 
 class VendorEvent extends Component {
@@ -43,8 +44,7 @@ class VendorEvent extends Component {
                         <Table.Row key={i}>
                           <Table.Cell> {event.name} </Table.Cell>
                           <Table.Cell textAlign="right">
-                              <Button icon color="green" size="tiny"><Icon name="edit" /></Button>
-                              <Button icon color="red" size="tiny"><Icon name="delete" /></Button>
+                            <VendorEventDelete id={event._id} />
                           </Table.Cell>
                         </Table.Row>
                       )

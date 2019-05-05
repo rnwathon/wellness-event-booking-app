@@ -57,3 +57,30 @@ export const addEvent = (token, name) => dispatch => {
     dispatch(showAlert())
   })
 }
+
+export const deleteEvent = (token, id) => dispatch => {
+  dispatch({type: 'DELETE_EVENT_REQUEST'})
+
+  return Axios({
+    method: 'DELETE',
+    url: `${url}/v1/api/vendor/event/${id}`,
+    headers: {
+      auth: token
+    }
+  })
+  .then(res => {
+    dispatch({
+      type: 'DELETE_EVENT_SUCCESS',
+      message: res.data.message,
+      events: res.data.data
+    })
+    dispatch(showAlert())
+  })
+  .catch(err => {
+    dispatch({
+      type: 'DELETE_EVENT_FAILED',
+      message: err.response ? err.response.data.message : err.message
+    })
+    dispatch(showAlert())
+  })
+}
