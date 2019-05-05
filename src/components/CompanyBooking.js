@@ -1,35 +1,10 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 import {Card, Table, Button, Message, Label, Icon} from 'semantic-ui-react';
 import CompanyBookingAdd from './CompanyBookingAdd';
 import CompanyBookingView from './CompanyBookingView';
 
-export default class CompanyBooking extends Component {
-  state = {
-    booking: [
-      {
-        eventName: 'Seminar',
-        vendorName: 'Avina Medica',
-        date: ['2018-02-01', '2019-03-01', '2019-03-21'],
-        status: 'approved',
-        createdAt: '2018-01-01'
-      },
-      {
-        eventName: 'Medical Check-up',
-        vendorName: 'Avina Medica',
-        date: ['2018-02-01', '2019-03-01', '2019-03-21'],
-        status: 'pending',
-        createdAt: '2018-01-01'
-      },
-      {
-        eventName: 'Nobar',
-        vendorName: 'Avina Medica',
-        date: ['2018-02-01', '2019-03-01', '2019-03-21'],
-        status: 'rejected',
-        createdAt: '2018-01-01'
-      },
-      
-    ]
-  }
+class CompanyBooking extends Component {
   render() {
     return (
       <Card className="borderless extra-padding" fluid>
@@ -52,12 +27,12 @@ export default class CompanyBooking extends Component {
             </Table.Header>
             <Table.Body>
               {
-                this.state.booking.length === 0 ? 
+                this.props.bookings.length === 0 ? 
                   <Table.Row>
                     <Table.Cell colSpan="6" textAlign="center"> You Have Not Book Anything Yet.</Table.Cell>
                   </Table.Row>
                 : 
-                  this.state.booking.map((item, i) => {
+                  this.props.bookings.map((item, i) => {
                     return(
                       <Table.Row key={i}>
                         <Table.Cell>{item.eventName}</Table.Cell>
@@ -90,3 +65,10 @@ export default class CompanyBooking extends Component {
     )
   }
 }
+
+const mapStateToProps = store => {
+  return {
+    bookings: store.bookingReducer.bookings
+  }
+}
+export default connect(mapStateToProps)(CompanyBooking);
