@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Header, Icon, Modal, Form, Label } from 'semantic-ui-react';
+import { Button, Header, Icon, Modal, Form, Label, Message } from 'semantic-ui-react';
 import { DateTimeInput } from 'semantic-ui-calendar-react';
 
 export default class CompanyBookingAdd extends Component {
@@ -9,7 +9,8 @@ export default class CompanyBookingAdd extends Component {
     event: '',
     vendor: '',
     date: '',
-    proposedDate: []
+    proposedDate: [],
+    proposedDateLimit: false
   }
 
   handleOpen = () => this.setState({ modalOpen: true })
@@ -24,14 +25,29 @@ export default class CompanyBookingAdd extends Component {
 
   handleDateChange = (event, {name, value}) => {
     if (this.state.hasOwnProperty(name)) {
-      this.setState({ [name] : value })
-      let newDate = [...this.state.proposedDate];
-      newDate.push(value);
-      this.setState({ 
-        proposedDate: newDate,
-        date: ''
-      });
+      if(this.state.proposedDate.length < 3){
+        this.setState({ [name] : value })
+        let newDate = [...this.state.proposedDate];
+        newDate.push(value);
+        this.setState({ 
+          proposedDate: newDate,
+          date: ''
+        });
+      } else {
+        this.setState({proposedDateLimit: true})
+        setTimeout(()=> {
+          this.setState({proposedDateLimit: false})
+        },5000)
+      }
     }
+  }
+
+  handleDateDelete = i => {
+    let newPropossedDate = [...this.state.proposedDate];
+    newPropossedDate.splice(i,1);
+    this.setState({
+      proposedDate: newPropossedDate
+    })
   }
 
   render() {
@@ -68,19 +84,25 @@ export default class CompanyBookingAdd extends Component {
               <label>Proposed Date</label>
               <DateTimeInput
                 name="date"
-                placeholder=" Choose Date & Time"
+                placeholder="You can choose up to 3 dates"
                 value={this.state.date}
                 onChange={this.handleDateChange}
                 />
 
               {
                 this.state.proposedDate.length !== 0 && 
-                  this.state.proposedDate.map(date => {
+                  this.state.proposedDate.map((date, i) => {
                     return(
-                      <Label>{date}<Icon name="delete"/></Label>
+                      <Label key={i}>{date}<Icon name="delete" onClick={() => this.handleDateDelete(i)}/></Label>
                     )
                   })
               }
+
+              <Message negative hidden={!this.state.proposedDateLimit}>
+                <Message.Header>Proposed Date Limit!</Message.Header>
+                <p>You only allow to proposed 3 dates</p>
+              </Message>
+
             </Form.Field>
 
             <Button color='green' type="submit">
