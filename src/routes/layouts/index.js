@@ -1,7 +1,5 @@
 import React from 'react';
-import {Route, NavLink} from 'react-router-dom';
-import {connect} from 'react-redux';
-import {Icon} from 'semantic-ui-react';
+import {Route} from 'react-router-dom';
 import Sidebar from './../../components/Sidebar';
 
 export const DashboardLayout = ({component: Component, ...rest}) => {
