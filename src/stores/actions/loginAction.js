@@ -53,3 +53,12 @@ export const checkLogin = () => dispatch => {
     })
   }
 }
+
+export const logout = () => dispatch => {
+  sessionStorage.removeItem('token')
+  dispatch({
+    type: 'LOGOUT',
+    message: 'You are successfuly logged out'
+  })
+  dispatch(showAlert());
+}

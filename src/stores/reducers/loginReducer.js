@@ -34,5 +34,16 @@ export const loginReducer = (state = initState, action) => {
     }
   }
 
+  if(action.type === 'LOGOUT'){
+    return {
+      ...state,
+      message: action.message,
+      isLogin: false,
+      token: '',
+      name: '',
+      role: ''
+    }
+  }
+
   return state
 }
