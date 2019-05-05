@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {Header, Card, Table, Grid} from 'semantic-ui-react';
+import ErrorAlert from './ErrorAlert';
 import VendorEvent from './VendorEvent';
 import VendorBooking from './VendorBooking';
-
 
 class VendorDashboard extends Component {
   render() {
     return (
       <div>
+        <ErrorAlert message={this.props.message} />
+        
         <Grid>
           <Grid.Row>
             <Grid.Column width={16}>
@@ -43,7 +45,8 @@ class VendorDashboard extends Component {
 
 const mapStateToPros = store => {
   return {
-    role: store.loginReducer.role
+    role: store.loginReducer.role,
+    message: store.eventReducer.message
   }
 }
 
