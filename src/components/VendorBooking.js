@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {Card, Table, Button, Label, Icon, Message} from 'semantic-ui-react';
+import VendorBookingView from './VendorBookingView';
 
 class VendorBooking extends Component {
   render() {
@@ -48,7 +49,7 @@ class VendorBooking extends Component {
                           </Table.Cell>
                           <Table.Cell>{event.createdAt}</Table.Cell>
                           <Table.Cell>
-                            <Button primary>View</Button>
+                            <VendorBookingView id={i} />
                           </Table.Cell>
                         </Table.Row>
                       )
