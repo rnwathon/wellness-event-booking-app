@@ -8,7 +8,7 @@ import VendorEventAdd from './VendorEventAdd';
 class VendorEvent extends Component {
 
   componentDidMount(){
-    this.props.getEvents();
+    this.props.getEvents(this.props.token);
   }
 
   render() {
@@ -60,6 +60,7 @@ class VendorEvent extends Component {
 
 const mapStateToProps = store => {
   return{
+    token: store.loginReducer.token,
     isFetching: store.eventReducer.isFetching,
     events: store.eventReducer.events
   }

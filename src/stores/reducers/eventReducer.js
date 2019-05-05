@@ -1,5 +1,6 @@
 const initState = {
   isFetching: false,
+  message: '',
   events: []
 }
 
@@ -18,6 +19,14 @@ export const eventReducer = (state = initState, action) => {
       ...state,
       isFetching: false,
       events: action.events
+    }
+  }
+
+  if(action.type === 'GET_EVENTS_FAILED'){
+    return {
+      ...state,
+      isFetching: false,
+      message: action.message
     }
   }
 
