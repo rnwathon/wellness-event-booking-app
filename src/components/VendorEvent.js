@@ -1,24 +1,26 @@
 import React, { Component } from 'react';
-import {Header, Card, Table, Button, Icon} from 'semantic-ui-react';
+import {Card, Table, Button, Icon, Loader, Dimmer} from 'semantic-ui-react';
+import {connect} from 'react-redux';
+import {getEvents} from './../stores/actions/eventAction';
 
 
-export default class VendorEvent extends Component {
-  state = {
-    events: [
-      {
-        name: 'Seminar'
-      },
-      {
-        name: 'Medical Checkup'
-      }
-    ]
+class VendorEvent extends Component {
+
+  componentDidMount(){
+    this.props.getEvents();
   }
 
   render() {
+
+    const {isFetching, events} = this.props;
+
     return (
       <Card className="borderless extra-padding" fluid>
         <Card.Content>
-          <Card.Header blue>Your Event Services</Card.Header>
+          <Dimmer inverted active={isFetching && true}>
+            <Loader/>
+          </Dimmer>
+          <Card.Header>Your Event Services</Card.Header>
           <Card.Meta className="mb-2"> Manage your event services that you can do </Card.Meta>
           <Table basic="very" compact padded>
             <Table.Header>
@@ -29,14 +31,14 @@ export default class VendorEvent extends Component {
             </Table.Header>
             <Table.Body>
                 {
-                  this.state.events === 0 ?
+                  events.length === 0 ?
                     <Table.Row>
                       <Table.Cell colSpan="2" textAlign="center">You have no event service yet.</Table.Cell>
                     </Table.Row>
                   :
-                    this.state.events.map(event => {
+                    events.map((event, i) => {
                       return(
-                        <Table.Row>
+                        <Table.Row key={i}>
                           <Table.Cell> {event.name} </Table.Cell>
                           <Table.Cell textAlign="right">
                               <Button icon color="green" size="tiny"><Icon name="edit" /></Button>
@@ -53,3 +55,12 @@ export default class VendorEvent extends Component {
     )
   }
 }
+
+const mapStateToProps = store => {
+  return{
+    isFetching: store.eventReducer.isFetching,
+    events: store.eventReducer.events
+  }
+}
+
+export default connect(mapStateToProps, {getEvents})(VendorEvent);
