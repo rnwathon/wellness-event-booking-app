@@ -20,7 +20,7 @@ class VendorDashboard extends Component {
                   <Header 
                     as='h1' 
                     color="blue"
-                    content={`Welcome, ${this.props.role}`}
+                    content={`Welcome, ${this.props.name}`}
                     className="bolder">
                   </Header>
                 </Card.Content>
@@ -45,6 +45,7 @@ class VendorDashboard extends Component {
 
 const mapStateToPros = store => {
   return {
+    name: store.loginReducer.name,
     role: store.loginReducer.role,
     message: store.eventReducer.message
   }
