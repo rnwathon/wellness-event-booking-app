@@ -1,17 +1,17 @@
 const initState = {
-  isError: false
+  isOpen: false
 }
 
 export const modalReducer = (state=initState, action) => {
-  if(action.type === 'SHOW_ERROR_ALERT'){
+  if(action.type === 'SHOW_ALERT'){
     return{
-      isError: true
+      isOpen: true
     }
   }
 
-  if(action.type === 'HIDE_ERROR_ALERT'){
+  if(action.type === 'HIDE_ALERT'){
     return{
-      isError: false
+      isOpen: false
     }
   }
   

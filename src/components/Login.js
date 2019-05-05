@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Card, Form, Button, Dimmer, Loader} from 'semantic-ui-react';
 import {connect} from 'react-redux';
 import {login} from './../stores/actions/loginAction';
-import ErrorAlert from './ErrorAlert';
+import Alert from './Alert';
 
 class Login extends Component {
   
@@ -27,7 +27,7 @@ class Login extends Component {
     return (
       <div className="login">
 
-        <ErrorAlert message={this.props.message} />
+        <Alert message={this.props.message} />
         
         <Dimmer active={isFetching && true}>
           <Loader />

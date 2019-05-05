@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import {url} from './../../helpers/url';
 import jwt from 'jsonwebtoken';
-import {showErrorAlert} from './modalAction';
+import {showAlert} from './modalAction';
 
 export const login = (email, password) => dispatch => {
   dispatch({type: 'LOGIN_REQUEST'})
@@ -37,6 +37,6 @@ export const login = (email, password) => dispatch => {
       message: err.response ? err.response.data.message : err.message
     })
 
-    dispatch(showErrorAlert());
+    dispatch(showAlert());
   })
 }
