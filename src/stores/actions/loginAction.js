@@ -23,6 +23,7 @@ export const login = (email, password) => dispatch => {
     }
   })
   .then(res => {
+    sessionStorage.setItem('token', res.data.token);
     const decoded = jwt.decode(res.data.token);
     dispatch({
       type: 'LOGIN_SUCCESS',
@@ -39,4 +40,16 @@ export const login = (email, password) => dispatch => {
 
     dispatch(showAlert());
   })
+}
+
+export const checkLogin = () => dispatch => {
+  const decoded = jwt.decode(sessionStorage.getItem('token'));
+  if(decoded){
+    dispatch({
+      type: 'LOGIN_SUCCESS',
+      name: decoded.name,
+      role: decoded.role,
+      token: sessionStorage.getItem('token')
+    })
+  }
 }

@@ -4,9 +4,12 @@ import LoginRoute from './routes/LoginRoute';
 import CompanyRoute from './routes/CompanyRoute';
 import VendorRoute from './routes/VendorRoute';
 import {connect} from 'react-redux';
-import {loginAction} from './stores/actions/loginAction';
+import {checkLogin} from './stores/actions/loginAction';
 
 class App extends Component {
+  componentDidMount() {
+    this.props.checkLogin()
+  }
   render(){
 
     const {isLogin, name, role} = this.props;
@@ -42,4 +45,4 @@ const mapStateToProps = store => {
   }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, {checkLogin})(App);
