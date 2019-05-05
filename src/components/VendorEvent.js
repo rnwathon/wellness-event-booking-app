@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Card, Table, Button, Icon, Loader, Dimmer} from 'semantic-ui-react';
 import {connect} from 'react-redux';
 import {getEvents} from './../stores/actions/eventAction';
+import VendorEventAdd from './VendorEventAdd';
 
 
 class VendorEvent extends Component {
@@ -21,7 +22,8 @@ class VendorEvent extends Component {
             <Loader/>
           </Dimmer>
           <Card.Header>Your Event Services</Card.Header>
-          <Card.Meta className="mb-2"> Manage your event services that you can do </Card.Meta>
+          <Card.Meta className="mb-1"> Manage your event services that you can do </Card.Meta>
+          <VendorEventAdd />
           <Table basic="very" compact padded>
             <Table.Header>
               <Table.Row>
