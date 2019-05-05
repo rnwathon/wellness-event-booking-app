@@ -14,15 +14,21 @@ export const eventReducer = (state = initState, action) => {
       }
   }
 
-  if(action.type === 'GET_EVENTS_SUCCESS'){
+  if(
+    action.type === 'GET_EVENTS_SUCCESS' ||
+    action.type === 'ADD_EVENT_SUCCESS'
+  ){
     return {
       ...state,
       isFetching: false,
+      message: action.message,
       events: action.events
     }
   }
 
-  if(action.type === 'GET_EVENTS_FAILED'){
+  if(
+    action.type === 'GET_EVENTS_FAILED' ||
+    action.type === 'ADD_EVENT_FAILED'){
     return {
       ...state,
       isFetching: false,
