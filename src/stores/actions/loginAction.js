@@ -27,6 +27,7 @@ export const login = (email, password) => dispatch => {
     const decoded = jwt.decode(res.data.token);
     dispatch({
       type: 'LOGIN_SUCCESS',
+      id: decoded.id,
       name: decoded.name,
       role: decoded.role,
       token: res.data.token
@@ -47,6 +48,7 @@ export const checkLogin = () => dispatch => {
   if(decoded){
     dispatch({
       type: 'LOGIN_SUCCESS',
+      id: decoded.id,
       name: decoded.name,
       role: decoded.role,
       token: sessionStorage.getItem('token')

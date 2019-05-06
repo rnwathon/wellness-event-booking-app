@@ -16,6 +16,8 @@ class CompanyBooking extends Component {
     return (
       <Card className="borderless extra-padding" fluid>
         <Card.Content>
+          
+          {/* Loader when fetching data */}
           <Dimmer inverted active={this.props.isFetching && true}>
             <Loader/>
           </Dimmer>
@@ -23,6 +25,7 @@ class CompanyBooking extends Component {
           <Card.Header>Book an Event</Card.Header>
           <Card.Meta className="mb-1">Manage your event booking</Card.Meta>
 
+          {/* Add button to show modal */}
           <CompanyBookingAdd/>
 
           <Table basic="very" padded>

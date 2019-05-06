@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import moment from 'moment';
-import { Button, Header, Icon, Modal, Form, Label, Message, Dropdown } from 'semantic-ui-react';
+import { Button, Header, Icon, Modal, Form, Label, Message, Dropdown, Dimmer, Loader } from 'semantic-ui-react';
 import { DateTimeInput } from 'semantic-ui-calendar-react';
 import {getCountries, getAddress} from './../stores/actions/locationAction';
 import {getNormalizedEvents} from './../stores/actions/eventAction';
@@ -76,8 +76,22 @@ class CompanyBookingAdd extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.addBooking(this.props.token, this.state.eventId, this.state.proposedDate, this.state.address);
-    this.handleClose();
+    this.props.addBooking(this.props.token, this.state.eventId, this.state.proposedDate, this.state.address)
+    .then(() => {
+      // reset the state after submit
+      this.setState({
+        event: '',
+        eventId: '',
+        date: '',
+        proposedDate: [],
+        proposedDateLimit: false,
+        postal: '',
+        country: '',
+        address: ''
+      })
+      this.handleClose();
+    })
+
   }
 
   render() {
@@ -97,12 +111,19 @@ class CompanyBookingAdd extends Component {
         centered={false}
         trigger={<Button className="mb-1" color="blue" onClick={this.handleOpen}><Icon name="plus" /> Book New Event </Button>} 
         >
+        <Dimmer inverted active={this.props.isFetching && true}>
+          <Loader/>
+        </Dimmer>
         <Header content='Book New Event' />
         <Modal.Content>
           <Form onSubmit={this.handleSubmit}>
             <Form.Field>
               <label>Event Name</label>
-              <select defaultValue="" name="event" required onChange={this.handleChange}>
+              <select 
+                defaultValue="" 
+                name="event" 
+                required 
+                onChange={this.handleChange}>
                 <option value="" disabled>select type of event</option>
                 {this.props.events.map((event,i) => <option key={i} value={event.name}>{event.name}</option>)}
               </select>
@@ -112,7 +133,11 @@ class CompanyBookingAdd extends Component {
               this.state.event &&
               <Form.Field>
                 <label>Vendor Name</label>
-                <select defaultValue="" name="eventId" required onChange={this.handleChange}>
+                <select 
+                  defaultValue="" 
+                  name="eventId" 
+                  required 
+                  onChange={this.handleChange}>
                   <option value="" disabled>select vendor</option>
                   {
                     this.props.events
@@ -138,7 +163,9 @@ class CompanyBookingAdd extends Component {
                 this.state.proposedDate.length !== 0 && 
                   this.state.proposedDate.map((date, i) => {
                     return(
-                      <Label key={i}>{moment(date, 'DD-MM-YYYY HH:mm').format('dddd, DD MMMM YYYY [at] hh:mm A')}<Icon name="delete" onClick={() => this.handleDateDelete(i)}/></Label>
+                      <Label key={i}>{moment(date, 'DD-MM-YYYY HH:mm').format('dddd, DD MMMM YYYY [at] hh:mm A')}
+                        <Icon name="delete" onClick={() => this.handleDateDelete(i)}/>
+                      </Label>
                     )
                   })
               }
@@ -152,7 +179,12 @@ class CompanyBookingAdd extends Component {
             <Form.Group widths="equal">
               <Form.Field>
                 <label>Postal / Zip Code</label>
-                <input name="postal" type="text" placeholder="postal / zipcode" onChange={this.handleChange} required/>
+                <input 
+                  name="postal" 
+                  type="text" 
+                  placeholder="postal / zipcode" 
+                  onChange={this.handleChange} 
+                  required/>
               </Form.Field>
               <Form.Field>
                 <label>Country</label>
@@ -167,7 +199,14 @@ class CompanyBookingAdd extends Component {
  
               <Form.Field>
                 <label><br/></label>
-                <Button type="button" size="small" onClick={this.handleGetAddress} fluid primary>Generate Address</Button>
+                <Button 
+                  type="button" 
+                  size="small" 
+                  onClick={this.handleGetAddress} 
+                  fluid 
+                  primary>
+                  Generate Address
+                </Button>
               </Form.Field>
             </Form.Group>
   
@@ -198,7 +237,7 @@ class CompanyBookingAdd extends Component {
 
 const mapStateToProps = store => {
   return{
-    isFetching: store.locationReducer.isFetching,
+    isFetching: store.locationReducer.isFetching || store.bookingReducer.isFetching,
     token: store.loginReducer.token,
     events: store.eventReducer.events,
     countries: store.locationReducer.countries,

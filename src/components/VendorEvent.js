@@ -9,7 +9,7 @@ import VendorEventDelete from './VendorEventDelete';
 class VendorEvent extends Component {
 
   componentDidMount(){
-    this.props.getEvents(this.props.token);
+    this.props.getEvents(this.props.token, this.props.id);
   }
 
   render() {
@@ -60,6 +60,7 @@ class VendorEvent extends Component {
 
 const mapStateToProps = store => {
   return{
+    id: store.loginReducer.id,
     token: store.loginReducer.token,
     isFetching: store.eventReducer.isFetching,
     events: store.eventReducer.events

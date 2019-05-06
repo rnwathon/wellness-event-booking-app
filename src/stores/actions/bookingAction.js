@@ -1,15 +1,18 @@
 import Axios from "axios";
 import {url} from './../../helpers/url';
 import {showAlert} from './modalAction';
+import {resetAddress} from './locationAction';
+import jwt from 'jsonwebtoken';
 
 export const getBookingsByCompany = (token) => dispatch => {
   dispatch({type:'GET_BOOKINGS_REQUEST'})
-
+  const decoded = jwt.decode(token);
+  console.log(decoded.name, decoded.id)
   return Axios({
     method: 'GET',
     url: `${url}/v1/api/company/booking`,
     headers: {
-      auth: token
+      "auth": token
     }
   })
   .then(res => {
@@ -45,7 +48,7 @@ export const getBookingsByVendor = (token) => dispatch => {
   })
   .catch(err => {
     dispatch({
-      type: 'GET_BOOKINGS_SUCCESS',
+      type: 'GET_BOOKINGS_FAILED',
       message: err.response ? err.response.data.message : err.message
     })
     dispatch(showAlert())
@@ -73,7 +76,8 @@ export const addBooking = (token, eventId, dates, address) => dispatch => {
       message: res.data.message,
       bookings: res.data.data
     })
-    dispatch(showAlert())
+    dispatch(showAlert());
+    dispatch(resetAddress());
   })
   .catch(err => {
     dispatch({

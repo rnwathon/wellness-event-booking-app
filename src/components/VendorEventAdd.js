@@ -22,8 +22,10 @@ class VendorEventAdd extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.addEvent(this.props.token, this.state.event);
-    this.handleClose();
+    this.props.addEvent(this.props.token, this.state.event)
+    .then(() => {
+      this.handleClose();
+    })
   }
 
   render() {

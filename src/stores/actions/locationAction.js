@@ -48,3 +48,7 @@ export const getAddress = (zipcode, country) => dispatch => {
     dispatch(showAlert());
   })
 }
+
+export const resetAddress = () => dispatch => {
+  dispatch({type:'RESET_ADDRESS'})
+}

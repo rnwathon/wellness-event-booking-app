@@ -41,5 +41,12 @@ export const locationReducer = (state=initState, action) => {
     }
   }
 
+  if(action.type === 'RESET_ADDRESS'){
+    return{
+      ...state,
+      address: ''
+    }
+  }
+
   return state
 }

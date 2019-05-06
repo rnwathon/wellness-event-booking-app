@@ -2,7 +2,7 @@ import Axios from "axios";
 import {url} from './../../helpers/url';
 import {showAlert} from './modalAction';
 
-export const getEvents = (token) => dispatch => {
+export const getEvents = (token, id) => dispatch => {
   dispatch({type: 'GET_EVENTS_REQUEST'})
   return Axios({
     method: 'GET',

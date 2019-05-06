@@ -20,6 +20,7 @@ export const loginReducer = (state = initState, action) => {
       ...state,
       isFetching: false,
       isLogin: true,
+      id: action.id,
       token: action.token,
       name: action.name,
       role: action.role

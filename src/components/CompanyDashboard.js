@@ -27,6 +27,7 @@ class CompanyDashboard extends Component {
           </Grid.Row>
           <Grid.Row>
             <Grid.Column>
+              {/* Company Booking Data */}
               <CompanyBooking />
             </Grid.Column>
           </Grid.Row>
