@@ -38,10 +38,6 @@ export const loginReducer = (state = initState, action) => {
     return {
       ...state,
       message: action.message,
-      isLogin: false,
-      token: '',
-      name: '',
-      role: ''
     }
   }
 
