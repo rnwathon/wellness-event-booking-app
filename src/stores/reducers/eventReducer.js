@@ -42,5 +42,13 @@ export const eventReducer = (state = initState, action) => {
     }
   }
 
+  if(action.type === 'RESET_EVENT'){
+    return{
+      isFetching: false,
+      message: '',
+      events: []
+    }
+  }
+
   return state
 }

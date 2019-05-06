@@ -10,6 +10,7 @@ class VendorEvent extends Component {
 
   componentDidMount(){
     this.props.getEvents(this.props.token);
+    console.log('mounting')
   }
 
   render() {

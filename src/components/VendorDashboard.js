@@ -10,7 +10,6 @@ class VendorDashboard extends Component {
     return (
       <div>
         <Alert message={this.props.message} />
-        
         <Grid>
           <Grid.Row>
             <Grid.Column width={16}>
@@ -36,8 +35,6 @@ class VendorDashboard extends Component {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-
-        
       </div>
     )
   }

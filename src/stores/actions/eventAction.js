@@ -4,6 +4,7 @@ import {showAlert} from './modalAction';
 
 export const getEvents = (token) => dispatch => {
   dispatch({type: 'GET_EVENTS_REQUEST'})
+  console.log(token);
 
   return Axios({
     method: 'GET',
@@ -17,6 +18,7 @@ export const getEvents = (token) => dispatch => {
       type: 'GET_EVENTS_SUCCESS',
       events: res.data.data
     })
+      console.log(res.data.data);
   })
   .catch(err => {
     dispatch({
