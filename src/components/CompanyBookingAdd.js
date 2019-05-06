@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Button, Header, Icon, Modal, Form, Label, Message, Dropdown } from 'semantic-ui-react';
 import { DateTimeInput } from 'semantic-ui-calendar-react';
-import {getCountries} from './../stores/actions/locationAction';
+import {getCountries, getAddress} from './../stores/actions/locationAction';
 
 class CompanyBookingAdd extends Component {
 
@@ -12,7 +12,10 @@ class CompanyBookingAdd extends Component {
     vendor: '',
     date: '',
     proposedDate: [],
-    proposedDateLimit: false
+    proposedDateLimit: false,
+    postal: '',
+    country: '',
+    address: ''
   }
 
   componentDidMount(){
@@ -27,6 +30,15 @@ class CompanyBookingAdd extends Component {
     this.setState({
       [e.target.name]: e.target.value
     })
+  }
+
+  handleCountryChange = (event, {value}) => {
+    this.setState({country: value})
+  }
+
+  handleGetAddress = () => {
+    this.props.getAddress(this.state.postal, this.state.country);
+    this.setState({address: this.props.address})
   }
 
   handleDateChange = (event, {name, value}) => {
@@ -122,17 +134,29 @@ class CompanyBookingAdd extends Component {
             <Form.Group widths="equal">
               <Form.Field>
                 <label>Postal / Zip Code</label>
-                <input type="text" placeholder="postal/zipcode"/>
+                <input name="postal" type="text" placeholder="postal / zipcode" onChange={this.handleChange}/>
               </Form.Field>
               <Form.Field>
                 <label>Country</label>
                 <Dropdown 
+                  name="country"
                   placeholder="Select Country"
                   search
                   selection
-                  options={countriesMapped}/>
+                  options={countriesMapped}
+                  onChange={this.handleCountryChange}/>
+              </Form.Field>
+              <Form.Field>
+                <label><br/></label>
+                <Button primary size="tiny" onClick={this.handleGetAddress}>Generate Address</Button>
               </Form.Field>
             </Form.Group>
+  
+            <Form.Field>
+              <label>Address</label>
+              <input name="address" type="text" readOnly value={this.props.isFetching ? 'Loading...' : this.props.address}/>
+            </Form.Field>
+            
 
             <Button color='green' type="submit">
               <Icon name='checkmark' /> Submit
@@ -150,9 +174,11 @@ class CompanyBookingAdd extends Component {
 
 const mapStateToProps = store => {
   return{
+    isFetching: store.locationReducer.isFetching,
     token: store.loginReducer.token,
-    countries: store.locationReducer.countries
+    countries: store.locationReducer.countries,
+    address: store.locationReducer.address
   }
 }
 
-export default connect(mapStateToProps, {getCountries})(CompanyBookingAdd);
+export default connect(mapStateToProps, {getCountries, getAddress})(CompanyBookingAdd);

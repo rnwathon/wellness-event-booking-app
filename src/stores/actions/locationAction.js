@@ -1,4 +1,5 @@
 import Axios from "axios";
+import {showAlert} from './modalAction';
 
 export const getCountries = () => dispatch => {
   dispatch({type: 'GET_COUNTRIES_REQUEST'})
@@ -15,5 +16,33 @@ export const getCountries = () => dispatch => {
   })
   .catch(err => {
 
+  })
+}
+
+export const getAddress = (zipcode, country) => dispatch => {
+  dispatch({type: 'GET_ADDRESS_REQUEST'})
+
+  return Axios({
+    method: 'GET',
+    url: `https://geocode.xyz/${zipcode}?region=${country}&json=1&auth=304768920662027952282x2272`
+  })
+  .then(res => {
+    res.data.matches === null ?
+      dispatch({
+        type: 'GET_ADDRESS_FAILED',
+        address: 'Address is not found'
+      })
+      : 
+      dispatch({
+        type: 'GET_ADDRESS_SUCCESS',
+        address: `${res.data.standard.addresst}, ${res.data.standard.city} ${res.data.standard.postal}`
+      })
+  })
+  .catch(err => {
+    dispatch({
+      type: 'GET_ADDRESS_FAILED',
+      message: err.message,
+    })
+    dispatch(showAlert());
   })
 }
