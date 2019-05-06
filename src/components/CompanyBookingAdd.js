@@ -90,8 +90,8 @@ class CompanyBookingAdd extends Component {
           <Form>
             <Form.Field>
               <label>Event Name</label>
-              <select name="event" required onChange={this.handleChange}>
-                <option value="" disabled selected>select type of event</option>
+              <select defaultValue="" name="event" required onChange={this.handleChange}>
+                <option value="" disabled>select type of event</option>
                 <option>Seminar</option>
                 <option>Screening</option>
                 <option>Seminar</option>
@@ -100,8 +100,8 @@ class CompanyBookingAdd extends Component {
 
             <Form.Field>
               <label>Vendor Name</label>
-              <select name="vendor" required onChange={this.handleChange}>
-                <option value="" disabled selected>select vendor</option>
+              <select defaultValue="" name="vendor" required onChange={this.handleChange}>
+                <option value="" disabled>select vendor</option>
                 <option>Aburame</option>
                 <option>Konohagakure</option>
               </select>
@@ -154,7 +154,7 @@ class CompanyBookingAdd extends Component {
   
             <Form.Field>
               <label>Address</label>
-              <input name="address" type="text" readOnly value={this.props.isFetching ? 'Loading...' : this.props.address}/>
+              <input name="address" type="text" readOnly value={this.props.isFetching ? 'Loading...' : this.props.message || this.props.address}/>
             </Form.Field>
             
 
@@ -177,7 +177,8 @@ const mapStateToProps = store => {
     isFetching: store.locationReducer.isFetching,
     token: store.loginReducer.token,
     countries: store.locationReducer.countries,
-    address: store.locationReducer.address
+    address: store.locationReducer.address,
+    message: store.locationReducer.message
   }
 }
 

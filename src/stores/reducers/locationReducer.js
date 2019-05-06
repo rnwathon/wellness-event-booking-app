@@ -27,6 +27,7 @@ export const locationReducer = (state=initState, action) => {
     return{
       ...state,
       isFetching: false,
+      message: action.message,
       address: action.address
     }
   }

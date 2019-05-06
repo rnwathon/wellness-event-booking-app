@@ -30,18 +30,20 @@ export const getAddress = (zipcode, country) => dispatch => {
     res.data.matches === null ?
       dispatch({
         type: 'GET_ADDRESS_FAILED',
-        address: 'Address is not found'
+        message: 'Address is not found',
+        address: ''
       })
       : 
       dispatch({
         type: 'GET_ADDRESS_SUCCESS',
+        message: '',
         address: `${res.data.standard.addresst}, ${res.data.standard.city} ${res.data.standard.postal}`
       })
   })
   .catch(err => {
     dispatch({
       type: 'GET_ADDRESS_FAILED',
-      message: err.message,
+      message: 'Address is not found',
     })
     dispatch(showAlert());
   })
