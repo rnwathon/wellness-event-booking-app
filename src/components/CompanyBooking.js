@@ -1,14 +1,25 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {Card, Table, Button, Message, Label, Icon} from 'semantic-ui-react';
+import {Card, Table, Dimmer, Loader, Message, Label, Icon} from 'semantic-ui-react';
+import {getBookingsByCompany} from './../stores/actions/bookingAction';
 import CompanyBookingAdd from './CompanyBookingAdd';
 import CompanyBookingView from './CompanyBookingView';
+import moment from 'moment';
 
 class CompanyBooking extends Component {
+
+  componentDidMount(){
+    this.props.getBookingsByCompany(this.props.token);
+  }
+  
   render() {
     return (
       <Card className="borderless extra-padding" fluid>
         <Card.Content>
+          <Dimmer inverted active={this.props.isFetching && true}>
+            <Loader/>
+          </Dimmer>
+
           <Card.Header>Book an Event</Card.Header>
           <Card.Meta className="mb-1">Manage your event booking</Card.Meta>
 
@@ -35,18 +46,25 @@ class CompanyBooking extends Component {
                   this.props.bookings.map((item, i) => {
                     return(
                       <Table.Row key={i}>
-                        <Table.Cell>{item.eventName}</Table.Cell>
-                        <Table.Cell>{item.vendorName}</Table.Cell>
-                        <Table.Cell width={2}>
+                        <Table.Cell>{item.idEvent.name}</Table.Cell>
+                        <Table.Cell>{item.idEvent.idVendor.name}</Table.Cell>
+                        <Table.Cell width={5}>
                           {
-                            item.date.map(date => <Label style={{margin: '0.15em'}}><Icon name="calendar" /> {date} </Label>)
+                            item.date.map((date,i) => {
+                              return(
+                                <Label key={i} style={{margin: '0.15em'}}>
+                                  <Icon name="calendar" /> 
+                                  {moment(date).format('dddd, DD MMMM YYYY [at] hh:mm A')}
+                                </Label>
+                              )
+                            })
                           }
                         </Table.Cell>
                         <Table.Cell width={2}>
                           {
-                            item.status === 'pending' ? <Message size="tiny" color="orange" compact header={item.status} />
-                            : item.status === 'rejected' ? <Message size="tiny" color="red" compact header={item.status} />
-                            : item.status === 'approved' ? <Message size="tiny" color="green" compact header={item.status} />
+                            item.status === 'Pending' ? <Message size="tiny" color="orange" compact header={item.status} />
+                            : item.status === 'Rejected' ? <Message size="tiny" color="red" compact header={item.status} />
+                            : item.status === 'Approved' ? <Message size="tiny" color="green" compact header={item.status} />
                             : null
                           }
                         </Table.Cell>
@@ -68,7 +86,9 @@ class CompanyBooking extends Component {
 
 const mapStateToProps = store => {
   return {
+    token: store.loginReducer.token,
+    isFetching: store.bookingReducer.isFetching,
     bookings: store.bookingReducer.bookings
   }
 }
-export default connect(mapStateToProps)(CompanyBooking);
+export default connect(mapStateToProps, {getBookingsByCompany})(CompanyBooking);

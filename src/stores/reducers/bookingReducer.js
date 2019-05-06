@@ -1,5 +1,6 @@
 const initState = {
   isFetching: false,
+  message: '',
   bookings: []
 }
 
@@ -18,7 +19,8 @@ export const bookingReducer = (state=initState, action) => {
     return {
       ...state,
       isFetching: false,
-      bookings: action.bookings
+      bookings: action.bookings,
+      message: action.message
     }
   }
 

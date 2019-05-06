@@ -20,7 +20,7 @@ export const getBookingsByCompany = (token) => dispatch => {
   })
   .catch(err => {
     dispatch({
-      type: 'GET_BOOKINGS_SUCCESS',
+      type: 'GET_BOOKINGS_FAILED',
       message: err.response ? err.response.data.message : err.message
     })
     dispatch(showAlert())
@@ -52,14 +52,19 @@ export const getBookingsByVendor = (token) => dispatch => {
   })
 }
 
-export const addBooking = (token, eventId, dates, location) => dispatch => {
+export const addBooking = (token, eventId, dates, address) => dispatch => {
   dispatch({type:'ADD_BOOKING_REQUEST'})
 
   return Axios({
-    method: 'GET',
+    method: 'POST',
     url: `${url}/v1/api/company/booking`,
     headers: {
       auth: token
+    },
+    data: {
+      id: eventId,
+      date: dates,
+      location: address
     }
   })
   .then(res => {

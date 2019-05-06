@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {Header, Card, Grid} from 'semantic-ui-react';
+import Alert from './Alert';
 import CompanyBooking from './CompanyBooking';
 
 class CompanyDashboard extends Component {
   render() {
     return (
       <div>
+        <Alert message={this.props.message} />
         <Grid>
           <Grid.Row>
             <Grid.Column>
@@ -38,7 +40,8 @@ class CompanyDashboard extends Component {
 const mapStateToPros = store => {
   return {
     name: store.loginReducer.name,
-    role: store.loginReducer.role
+    role: store.loginReducer.role,
+    message: store.bookingReducer.message
   }
 }
 

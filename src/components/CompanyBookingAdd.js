@@ -5,6 +5,7 @@ import { Button, Header, Icon, Modal, Form, Label, Message, Dropdown } from 'sem
 import { DateTimeInput } from 'semantic-ui-calendar-react';
 import {getCountries, getAddress} from './../stores/actions/locationAction';
 import {getNormalizedEvents} from './../stores/actions/eventAction';
+import {addBooking} from './../stores/actions/bookingAction';
 
 class CompanyBookingAdd extends Component {
 
@@ -40,8 +41,9 @@ class CompanyBookingAdd extends Component {
   }
 
   handleGetAddress = () => {
-    this.props.getAddress(this.state.postal, this.state.country);
-    this.setState({address: this.props.address})
+    this.props.getAddress(this.state.postal, this.state.country).then(() => {
+      this.setState({address: this.props.address})
+    });
   }
 
   handleDateChange = (event, {name, value}) => {
@@ -52,7 +54,7 @@ class CompanyBookingAdd extends Component {
         newDate.push(value);
         this.setState({ 
           proposedDate: newDate,
-          date: ''
+          date: newDate
         });
       } else {
         this.setState({proposedDateLimit: true})
@@ -67,8 +69,15 @@ class CompanyBookingAdd extends Component {
     let newPropossedDate = [...this.state.proposedDate];
     newPropossedDate.splice(i,1);
     this.setState({
-      proposedDate: newPropossedDate
+      proposedDate: newPropossedDate,
+      date: newPropossedDate
     })
+  }
+
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.addBooking(this.props.token, this.state.eventId, this.state.proposedDate, this.state.address);
+    this.handleClose();
   }
 
   render() {
@@ -90,7 +99,7 @@ class CompanyBookingAdd extends Component {
         >
         <Header content='Book New Event' />
         <Modal.Content>
-          <Form>
+          <Form onSubmit={this.handleSubmit}>
             <Form.Field>
               <label>Event Name</label>
               <select defaultValue="" name="event" required onChange={this.handleChange}>
@@ -118,9 +127,10 @@ class CompanyBookingAdd extends Component {
             <Form.Field>
               <label>Proposed Date</label>
               <DateTimeInput
+                required
                 name="date"
                 placeholder="You can choose up to 3 dates"
-                value={this.state.date}
+                value={typeof this.state.date === "object" ? this.state.date.join(", ") : this.state.date}
                 onChange={this.handleDateChange}
                 />
 
@@ -142,7 +152,7 @@ class CompanyBookingAdd extends Component {
             <Form.Group widths="equal">
               <Form.Field>
                 <label>Postal / Zip Code</label>
-                <input name="postal" type="text" placeholder="postal / zipcode" onChange={this.handleChange}/>
+                <input name="postal" type="text" placeholder="postal / zipcode" onChange={this.handleChange} required/>
               </Form.Field>
               <Form.Field>
                 <label>Country</label>
@@ -154,15 +164,21 @@ class CompanyBookingAdd extends Component {
                   options={countriesMapped}
                   onChange={this.handleCountryChange}/>
               </Form.Field>
+ 
               <Form.Field>
                 <label><br/></label>
-                <Button primary size="tiny" onClick={this.handleGetAddress} fluid>Generate Address</Button>
+                <Button type="button" size="small" onClick={this.handleGetAddress} fluid primary>Generate Address</Button>
               </Form.Field>
             </Form.Group>
   
             <Form.Field>
               <label>Address</label>
-              <input name="address" type="text" readOnly value={this.props.isFetching ? 'Loading...' : this.props.message || this.props.address}/>
+              <input 
+                name="address" 
+                type="text" 
+                readOnly 
+                required
+                value={this.props.isFetching ? 'Loading...' : this.props.message || this.props.address}/>
             </Form.Field>
             
 
@@ -191,4 +207,4 @@ const mapStateToProps = store => {
   }
 }
 
-export default connect(mapStateToProps, {getCountries, getAddress, getNormalizedEvents})(CompanyBookingAdd);
+export default connect(mapStateToProps, {getCountries, getAddress, getNormalizedEvents, addBooking})(CompanyBookingAdd);
