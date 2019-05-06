@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import moment from 'moment';
 import { Button, Header, Icon, Modal, Form, Label, Message, Dropdown } from 'semantic-ui-react';
 import { DateTimeInput } from 'semantic-ui-calendar-react';
 import {getCountries, getAddress} from './../stores/actions/locationAction';
@@ -83,7 +84,7 @@ class CompanyBookingAdd extends Component {
     return (
       <Modal 
         open={this.state.modalOpen}
-        size="tiny" 
+        size="small" 
         centered={false}
         trigger={<Button className="mb-1" color="blue" onClick={this.handleOpen}><Icon name="plus" /> Book New Event </Button>} 
         >
@@ -127,7 +128,7 @@ class CompanyBookingAdd extends Component {
                 this.state.proposedDate.length !== 0 && 
                   this.state.proposedDate.map((date, i) => {
                     return(
-                      <Label key={i}>{date}<Icon name="delete" onClick={() => this.handleDateDelete(i)}/></Label>
+                      <Label key={i}>{moment(date, 'DD-MM-YYYY HH:mm').format('dddd, DD MMMM YYYY [at] hh:mm A')}<Icon name="delete" onClick={() => this.handleDateDelete(i)}/></Label>
                     )
                   })
               }
@@ -155,7 +156,7 @@ class CompanyBookingAdd extends Component {
               </Form.Field>
               <Form.Field>
                 <label><br/></label>
-                <Button primary size="tiny" onClick={this.handleGetAddress}>Generate Address</Button>
+                <Button primary size="tiny" onClick={this.handleGetAddress} fluid>Generate Address</Button>
               </Form.Field>
             </Form.Group>
   
