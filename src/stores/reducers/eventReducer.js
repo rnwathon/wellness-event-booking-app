@@ -7,6 +7,7 @@ const initState = {
 export const eventReducer = (state = initState, action) => {
 
   if(action.type === 'GET_EVENTS_REQUEST' ||
+    action.type === 'GET_NORMALIZED_EVENTS_REQUEST' ||
     action.type === 'ADD_EVENT_REQUEST' ||
     action.type === 'DELETE_EVENT_REQUEST'){
       return {
@@ -17,6 +18,7 @@ export const eventReducer = (state = initState, action) => {
 
   if(
     action.type === 'GET_EVENTS_SUCCESS' ||
+    action.type === 'GET_NORMALIZED_EVENTS_SUCCESS' ||
     action.type === 'ADD_EVENT_SUCCESS' ||
     action.type === 'DELETE_EVENT_SUCCESS'
   ){
@@ -30,6 +32,7 @@ export const eventReducer = (state = initState, action) => {
 
   if(
     action.type === 'GET_EVENTS_FAILED' ||
+    action.type === 'GET_NORMALIZED_EVENTS_FAILED' ||
     action.type === 'ADD_EVENT_FAILED' ||
     action.type === 'DELETE_EVENT_FAILED'){
     return {

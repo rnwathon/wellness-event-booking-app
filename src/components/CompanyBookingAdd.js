@@ -3,13 +3,14 @@ import {connect} from 'react-redux';
 import { Button, Header, Icon, Modal, Form, Label, Message, Dropdown } from 'semantic-ui-react';
 import { DateTimeInput } from 'semantic-ui-calendar-react';
 import {getCountries, getAddress} from './../stores/actions/locationAction';
+import {getNormalizedEvents} from './../stores/actions/eventAction';
 
 class CompanyBookingAdd extends Component {
 
   state = { 
     modalOpen: false,
     event: '',
-    vendor: '',
+    eventId: '',
     date: '',
     proposedDate: [],
     proposedDateLimit: false,
@@ -20,6 +21,7 @@ class CompanyBookingAdd extends Component {
 
   componentDidMount(){
     this.props.getCountries();
+    this.props.getNormalizedEvents(this.props.token);
   }
 
   handleOpen = () => this.setState({ modalOpen: true })
@@ -69,7 +71,7 @@ class CompanyBookingAdd extends Component {
   }
 
   render() {
-    // maaped countries list to a new format for Dropdown Component
+    // mapped countries list to a new format for Dropdown Component
     const countriesMapped = this.props.countries.map(country => {
       return {
         key: country.alpha2Code,
@@ -92,20 +94,25 @@ class CompanyBookingAdd extends Component {
               <label>Event Name</label>
               <select defaultValue="" name="event" required onChange={this.handleChange}>
                 <option value="" disabled>select type of event</option>
-                <option>Seminar</option>
-                <option>Screening</option>
-                <option>Seminar</option>
+                {this.props.events.map((event,i) => <option key={i} value={event.name}>{event.name}</option>)}
               </select>
             </Form.Field>
 
-            <Form.Field>
-              <label>Vendor Name</label>
-              <select defaultValue="" name="vendor" required onChange={this.handleChange}>
-                <option value="" disabled>select vendor</option>
-                <option>Aburame</option>
-                <option>Konohagakure</option>
-              </select>
-            </Form.Field>
+            {
+              this.state.event &&
+              <Form.Field>
+                <label>Vendor Name</label>
+                <select defaultValue="" name="eventId" required onChange={this.handleChange}>
+                  <option value="" disabled>select vendor</option>
+                  {
+                    this.props.events
+                    .filter(event => event.name === this.state.event)[0].vendors
+                    .map((event, i) => <option key={i} value={event.idEvent}>{event.idVendor.name}</option>)
+                  }
+                </select>
+              </Form.Field>
+            }
+
 
             <Form.Field>
               <label>Proposed Date</label>
@@ -176,10 +183,11 @@ const mapStateToProps = store => {
   return{
     isFetching: store.locationReducer.isFetching,
     token: store.loginReducer.token,
+    events: store.eventReducer.events,
     countries: store.locationReducer.countries,
     address: store.locationReducer.address,
     message: store.locationReducer.message
   }
 }
 
-export default connect(mapStateToProps, {getCountries, getAddress})(CompanyBookingAdd);
+export default connect(mapStateToProps, {getCountries, getAddress, getNormalizedEvents})(CompanyBookingAdd);

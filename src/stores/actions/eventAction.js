@@ -28,6 +28,32 @@ export const getEvents = (token) => dispatch => {
   })
 }
 
+export const getNormalizedEvents = (token) => dispatch => {
+  dispatch({type: 'GET_NORMALIZED_EVENTS_REQUEST'})
+
+  return Axios({
+    method: 'GET',
+    url: `${url}/v1/api/company/event`,
+    headers: {
+      auth: token
+    }
+  })
+  .then(res => {
+    dispatch({
+      type: 'GET_NORMALIZED_EVENTS_SUCCESS',
+      events: res.data.data
+    })
+  })
+  .catch(err => {
+    dispatch({
+      type: 'GET_NORMALIZED_EVENTS_FAILED',
+      message: err.response ? err.response.data.message : err.message
+    })
+
+    dispatch(showAlert())
+  })
+}
+
 export const addEvent = (token, name) => dispatch => {
   dispatch({type: 'ADD_EVENT_REQUEST'})
 
