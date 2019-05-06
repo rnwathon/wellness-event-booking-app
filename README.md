@@ -13,8 +13,11 @@ $ npm start or yarn start
 
 ## Stack 
 This project uses several libraries & services:
+
 * [React.js](https://reactjs.org/)
+  
 * [Redux.js](https://redux.js.org/)
+  
 * [React-Redux](https://react-redux.js.org/)
 * [React-Helmet](https://github.com/nfl/react-helmet)
 * [Semantic UI React](https://react.semantic-ui.com)
