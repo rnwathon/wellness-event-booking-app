@@ -1,12 +1,22 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {Card, Table, Button, Label, Icon, Message} from 'semantic-ui-react';
+import {Card, Table, Label, Icon, Message, Dimmer, Loader} from 'semantic-ui-react';
 import VendorBookingView from './VendorBookingView';
+import {getBookingsByVendor} from './../stores/actions/bookingAction';
+import moment from 'moment'
 
 class VendorBooking extends Component {
+
+  componentDidMount(){
+    this.props.getBookingsByVendor(this.props.token)
+  }
+
   render() {
     return (
       <Card className="borderless extra-padding" fluid>
+        <Dimmer inverted active={this.props.isFetching && true}>
+          <Loader/>
+        </Dimmer>
         <Card.Content>
           <Card.Header>Booked Event By Company</Card.Header>
           <Card.Meta className="mb-2"> Manage your Booked Event by Companies </Card.Meta>
@@ -32,22 +42,31 @@ class VendorBooking extends Component {
                     this.props.bookings.map((event, i) => {
                       return(
                         <Table.Row key={i}>
-                          <Table.Cell>{event.eventName}</Table.Cell>
-                          <Table.Cell>{event.companyName}</Table.Cell>
-                          <Table.Cell width={3}>
+                          <Table.Cell>{event.idEvent.name}</Table.Cell>
+                          <Table.Cell>{event.idCompany.name}</Table.Cell>
+                          <Table.Cell width={5}>
                             {
-                              event.date.map((date,i) => <Label key={i} style={{margin: '0.15em'}}><Icon name="calendar" /> {date} </Label>)
+                              event.confirmedDate ? 
+                                <Label key={i} style={{margin: '0.15em'}}>
+                                  {moment(event.confirmedDate).format('dddd, DD MMMM YYYY [at] hh:mm A')}
+                                </Label> :
+                                event.date.map((date,i) => {
+                                  return(
+                                    <Label key={i} style={{margin: '0.15em'}}>
+                                      {moment(date).format('dddd, DD MMMM YYYY [at] hh:mm A')}
+                                    </Label>
+                                  )})
                             }
                           </Table.Cell>
                           <Table.Cell width={2}>
                             {
-                              event.status === 'pending' ? <Message size="tiny" color="orange" compact header={event.status} />
-                              : event.status === 'rejected' ? <Message size="tiny" color="red" compact header={event.status} />
-                              : event.status === 'approved' ? <Message size="tiny" color="green" compact header={event.status} />
+                              event.status === 'Pending' ? <Message size="tiny" color="orange" compact header={event.status} />
+                              : event.status === 'Rejected' ? <Message size="tiny" color="red" compact header={event.status} />
+                              : event.status === 'Approved' ? <Message size="tiny" color="green" compact header={event.status} />
                               : null
                             }
                           </Table.Cell>
-                          <Table.Cell>{event.createdAt}</Table.Cell>
+                          <Table.Cell>{moment(event.createdAt).format("DD MMMM YYYY")}</Table.Cell>
                           <Table.Cell>
                             <VendorBookingView id={i} />
                           </Table.Cell>
@@ -66,8 +85,10 @@ class VendorBooking extends Component {
 
 const mapStateToProps = store => {
   return{
+    token: store.loginReducer.token,
+    isFetching: store.bookingReducer.isFetching,
     bookings: store.bookingReducer.bookings
   }
 }
 
-export default connect(mapStateToProps)(VendorBooking);
+export default connect(mapStateToProps, {getBookingsByVendor})(VendorBooking);

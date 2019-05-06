@@ -44,7 +44,7 @@ const mapStateToPros = store => {
   return {
     name: store.loginReducer.name,
     role: store.loginReducer.role,
-    message: store.eventReducer.message
+    message: store.eventReducer.message || store.bookingReducer.message
   }
 }
 
