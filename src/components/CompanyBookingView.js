@@ -18,6 +18,7 @@ class CompanyBookingView extends Component {
           {/* Vendor Name */}
           <Header as="h3">Vendor Name</Header>
           <p>{booking.idEvent.idVendor.name}</p>
+          <br />
 
           {/* Proposed Date */}
           {
