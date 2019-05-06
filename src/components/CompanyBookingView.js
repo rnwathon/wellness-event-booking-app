@@ -26,9 +26,9 @@ class CompanyBookingView extends Component {
               <div>
                 <Header as="h3">Proposed Date</Header>
                 {
-                  booking.date.map(date=> {
+                  booking.date.map((date, i)=> {
                     return(
-                      <List bulleted>
+                      <List key={i} bulleted>
                         <List.Item>{moment(date).format("dddd, DD MMMM YYYY [at] hh:mm A")}</List.Item>
                       </List>
                     )
@@ -51,11 +51,12 @@ class CompanyBookingView extends Component {
           {/* Status */}
           <Header as="h3">Status</Header>
           {
-            booking.status === 'Pending' ? <Message size="tiny" color="orange" fluid header={booking.status} />
-              : booking.status === 'Rejected' ? <Message size="tiny" color="red" fluid header={booking.status} />
-              : booking.status === 'Approved' ? <Message size="tiny" color="green" fluid header={booking.status} />
+            booking.status === 'Pending' ? <Message size="tiny" color="orange" header={booking.status} />
+              : booking.status === 'Rejected' ? <Message size="tiny" color="red" header={booking.status} />
+              : booking.status === 'Approved' ? <Message size="tiny" color="green" header={booking.status} />
               : null
           }
+          <br />
 
           {/* Remarks */}
           {

@@ -12,7 +12,7 @@ class App extends Component {
   }
   render(){
 
-    const {isLogin, name, role} = this.props;
+    const {isLogin, role} = this.props;
 
     return (
       <div className="App">

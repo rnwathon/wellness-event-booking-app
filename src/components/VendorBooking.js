@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {Card, Table, Label, Icon, Message, Dimmer, Loader} from 'semantic-ui-react';
+import {Card, Table, Label, Message, Dimmer, Loader} from 'semantic-ui-react';
 import VendorBookingView from './VendorBookingView';
 import {getBookingsByVendor} from './../stores/actions/bookingAction';
 import moment from 'moment'
@@ -47,12 +47,12 @@ class VendorBooking extends Component {
                           <Table.Cell width={5}>
                             {
                               event.confirmedDate ? 
-                                <Label key={i} style={{margin: '0.15em'}}>
+                                <Label key={i} style={{margin: '0.15em'}} size="large">
                                   {moment(event.confirmedDate).format('dddd, DD MMMM YYYY [at] hh:mm A')}
                                 </Label> :
                                 event.date.map((date,i) => {
                                   return(
-                                    <Label key={i} style={{margin: '0.15em'}}>
+                                    <Label key={i} style={{margin: '0.15em'}} size="large">
                                       {moment(date).format('dddd, DD MMMM YYYY [at] hh:mm A')}
                                     </Label>
                                   )})

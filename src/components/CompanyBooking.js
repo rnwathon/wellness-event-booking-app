@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {Card, Table, Dimmer, Loader, Message, Label, Icon} from 'semantic-ui-react';
+import {Card, Table, Dimmer, Loader, Message, Label} from 'semantic-ui-react';
 import {getBookingsByCompany} from './../stores/actions/bookingAction';
 import CompanyBookingAdd from './CompanyBookingAdd';
 import CompanyBookingView from './CompanyBookingView';
@@ -43,32 +43,34 @@ class CompanyBooking extends Component {
                     <Table.Cell colSpan="6" textAlign="center"> You Have Not Book Anything Yet.</Table.Cell>
                   </Table.Row>
                 : 
-                  this.props.bookings.map((item, i) => {
+                  this.props.bookings.map((event, i) => {
                     return(
                       <Table.Row key={i}>
-                        <Table.Cell>{item.idEvent.name}</Table.Cell>
-                        <Table.Cell>{item.idEvent.idVendor.name}</Table.Cell>
+                        <Table.Cell>{event.idEvent.name}</Table.Cell>
+                        <Table.Cell>{event.idEvent.idVendor.name}</Table.Cell>
                         <Table.Cell width={5}>
                           {
-                            item.date.map((date,i) => {
-                              return(
-                                <Label key={i} style={{margin: '0.15em'}}>
-                                  <Icon name="calendar" /> 
-                                  {moment(date).format('dddd, DD MMMM YYYY [at] hh:mm A')}
-                                </Label>
-                              )
-                            })
-                          }
+                            event.confirmedDate ? 
+                              <Label key={i} style={{margin: '0.15em'}} size="large">
+                                {moment(event.confirmedDate).format('dddd, DD MMMM YYYY [at] hh:mm A')}
+                              </Label> :
+                              event.date.map((date,i) => {
+                                return(
+                                  <Label key={i} style={{margin: '0.15em'}} size="large">
+                                    {moment(date).format('dddd, DD MMMM YYYY [at] hh:mm A')}
+                                  </Label>
+                                )})
+                            }
                         </Table.Cell>
                         <Table.Cell width={2}>
                           {
-                            item.status === 'Pending' ? <Message size="tiny" color="orange" compact header={item.status} />
-                            : item.status === 'Rejected' ? <Message size="tiny" color="red" compact header={item.status} />
-                            : item.status === 'Approved' ? <Message size="tiny" color="green" compact header={item.status} />
+                            event.status === 'Pending' ? <Message size="tiny" color="orange" compact header={event.status} />
+                            : event.status === 'Rejected' ? <Message size="tiny" color="red" compact header={event.status} />
+                            : event.status === 'Approved' ? <Message size="tiny" color="green" compact header={event.status} />
                             : null
                           }
                         </Table.Cell>
-                        <Table.Cell>{item.createdAt}</Table.Cell>
+                        <Table.Cell>{event.createdAt}</Table.Cell>
                         <Table.Cell>
                           <CompanyBookingView id={i} />
                         </Table.Cell>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Card, Table, Button, Icon, Loader, Dimmer} from 'semantic-ui-react';
+import {Card, Table, Loader, Dimmer} from 'semantic-ui-react';
 import {connect} from 'react-redux';
 import {getEvents} from './../stores/actions/eventAction';
 import VendorEventAdd from './VendorEventAdd';
@@ -10,7 +10,6 @@ class VendorEvent extends Component {
 
   componentDidMount(){
     this.props.getEvents(this.props.token);
-    console.log('mounting')
   }
 
   render() {

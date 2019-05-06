@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {Header, Card, Table, Grid} from 'semantic-ui-react';
+import {Header, Card, Grid} from 'semantic-ui-react';
 import Alert from './Alert';
 import VendorEvent from './VendorEvent';
 import VendorBooking from './VendorBooking';

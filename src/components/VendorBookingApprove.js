@@ -23,7 +23,6 @@ class VendorBookingApprove extends Component {
   }
 
   render() {
-    console.log(this.state.confirmedDate)
     return (
       <Modal trigger={<Button color="green">Approve</Button>} centered={false} size="mini">
         <Dimmer inverted active={this.props.isFetching && true}>
@@ -40,7 +39,7 @@ class VendorBookingApprove extends Component {
                       label={moment(date).format("dddd, DD MMMM YYYY [at] hh:mm A")}
                       name='confirmedDate'
                       value={date}
-                      checked={this.state.confirmedDate == date}
+                      checked={this.state.confirmedDate === date}
                       onChange={this.handleChange}
                     />
                   </Form.Field>
