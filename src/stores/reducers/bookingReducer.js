@@ -5,14 +5,16 @@ const initState = {
 
 export const bookingReducer = (state=initState, action) => {
 
-  if(action.type === 'GET_BOOKINGS_REQUEST'){
+  if(action.type === 'GET_BOOKINGS_REQUEST' ||
+    action.type === 'ADD_BOOKING_REQUEST'){
     return {
       ...state,
       isFetching: true
     }
   }
 
-  if(action.type === 'GET_BOOKINGS_SUCCESS'){
+  if(action.type === 'GET_BOOKINGS_SUCCESS' ||
+    action.type === 'ADD_BOOKING_SUCCESS'){
     return {
       ...state,
       isFetching: false,
@@ -20,7 +22,8 @@ export const bookingReducer = (state=initState, action) => {
     }
   }
 
-  if(action.type === 'GET_BOOKINGS_FAILED'){
+  if(action.type === 'GET_BOOKINGS_FAILED' ||
+    action.type === 'ADD_BOOKING_FAILED'){
     return {
       ...state,
       isFetching: false,
