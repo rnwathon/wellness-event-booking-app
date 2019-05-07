@@ -59,7 +59,7 @@ class Login extends Component {
                   onChange={this.handleChange}/>
               </Form.Field>
               <Form.Field>
-                <Button type="submit" fluid color="blue">Submit</Button>
+                <Button type="submit" fluid color="blue">Login</Button>
               </Form.Field>
             </Form>
           </Card.Content>

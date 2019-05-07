@@ -73,7 +73,7 @@ class CompanyBooking extends Component {
                             : null
                           }
                         </Table.Cell>
-                        <Table.Cell>{event.createdAt}</Table.Cell>
+                        <Table.Cell>{moment(event.createdAt).format("DD MMMM YYYY")}</Table.Cell>
                         <Table.Cell>
                           <CompanyBookingView id={i} />
                         </Table.Cell>
