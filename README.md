@@ -90,7 +90,7 @@ Click on the **View** Button to show button details
 
 ![Company Booking](screenshot/CompanyBooking.png)
 
-### User Company Add Bew Booking
+### User Company Add New Booking
 
 Choose name of event from Dropdown list, then list of vendor that able to handle that event will come up. After that choose which vendor you want.
 
